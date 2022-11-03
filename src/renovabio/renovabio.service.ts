@@ -12,7 +12,7 @@ export class RenovabioService {
   }
 
   findAll() {
-    return `This action returns all renovabio`;
+    return this.prisma.article.findMany({ where: { published: true } });
   }
 
   findOne(id: number) {
