@@ -36,4 +36,4 @@ lerna-debug.log*
 
 # Sensitive
 .env
-.docker-compose.yml
+docker-compose.yml
