@@ -8,7 +8,11 @@ export class RenovabioService {
   constructor(private prisma: PrismaService) {}
 
   create(createRenovabioDto: CreateRenovabioDto) {
-    return 'This action adds a new renovabio';
+    return this.prisma.article.create({ data: createRenovabioDto });
+  }
+
+  findDrafts() {
+    return this.prisma.article.findMany({ where: { published: false } });
   }
 
   findAll() {
@@ -16,14 +20,17 @@ export class RenovabioService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} renovabio`;
+    return this.prisma.article.findUnique({ where: { id } });
   }
 
   update(id: number, updateRenovabioDto: UpdateRenovabioDto) {
-    return `This action updates a #${id} renovabio`;
+    return this.prisma.article.update({
+      where: { id },
+      data: updateRenovabioDto,
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} renovabio`;
+    return this.prisma.article.delete({ where: { id } });
   }
 }
