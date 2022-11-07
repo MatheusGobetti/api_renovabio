@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,14 +7,1066 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// prisma/schema.prisma
+model acesso {
+  id_acesso   Decimal   @id @db.Decimal(38, 0)
+  id_usuario  Decimal   @db.Decimal(38, 0)
+  usuario     String    @db.VarChar(255)
+  login       String    @db.VarChar(20)
+  data_login  DateTime  @default(now())
+  data_logout DateTime? @default(now())
+  sessao      String?   @db.VarChar(255)
+  numero_ip   String?   @db.VarChar(50)
+  detalhe     String?   @db.VarChar(2000)
+}
 
-model Article {
-  id          Int      @id @default(autoincrement())
-  title       String   @unique
-  description String?
-  body        String
-  published   Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+model departamento {
+  id_departamento     Decimal        @id @db.Decimal(38, 0)
+  id_departamento_pai Decimal?       @db.Decimal(38, 0)
+  sigla               String         @db.VarChar(10)
+  descricao           String         @db.VarChar(50)
+  id_usuario          Decimal?       @db.Decimal(38, 0)
+  integrado_app       Decimal        @db.Decimal(4, 0)
+  departamento        departamento?  @relation("departamentoTodepartamento", fields: [id_departamento_pai], references: [id_departamento], onDelete: NoAction, onUpdate: NoAction)
+  other_departamento  departamento[] @relation("departamentoTodepartamento")
+  usuario             usuario[]
+}
+
+model gestao_uso_solo {
+  id_gestao_uso_solo            Decimal         @id @db.Decimal(38, 0)
+  id_unidade                    Decimal         @db.Decimal(38, 0)
+  codigo_imovel                 String          @db.VarChar(13)
+  nome_propriedade              String          @db.VarChar(100)
+  id_cidade                     Decimal         @db.Decimal(38, 0)
+  proprietario                  String?         @db.VarChar(255)
+  tipo_parceria                 Decimal?        @db.Decimal(38, 0)
+  area_total_imovel             Decimal?        @db.Decimal(18, 3)
+  area_agricultavel             Decimal?        @db.Decimal(18, 3)
+  area_preservacao              Decimal?        @db.Decimal(18, 3)
+  area_reserva                  Decimal?        @db.Decimal(18, 3)
+  area_benfeitoria              Decimal?        @db.Decimal(18, 3)
+  modulos_fiscais               Decimal?        @db.Decimal(38, 0)
+  ccir                          String?         @db.VarChar(20)
+  matricula                     String?         @db.VarChar(255)
+  itr                           String?         @db.VarChar(10)
+  ada                           String?         @db.VarChar(10)
+  car                           String?         @db.VarChar(60)
+  planta_geral_filename         String?         @db.VarChar(255)
+  planta_geral_blob             Bytes?
+  uso_ocupacao_filename         String?         @db.VarChar(255)
+  uso_ocupacao_blob             Bytes?
+  zoneamento_ambiental_filename String?         @db.VarChar(255)
+  zoneamento_ambiental_blob     Bytes?
+  tematico_01_filename          String?         @db.VarChar(255)
+  tematico_01_blob              Bytes?
+  tematico_02_filename          String?         @db.VarChar(255)
+  tematico_02_blob              Bytes?
+  tematico_03_filename          String?         @db.VarChar(255)
+  tematico_03_blob              Bytes?
+  tematico_04_filename          String?         @db.VarChar(255)
+  tematico_04_blob              Bytes?
+  tematico_05_filename          String?         @db.VarChar(255)
+  tematico_05_blob              Bytes?
+  projeto_01_filename           String?         @db.VarChar(255)
+  projeto_01_blob               Bytes?
+  projeto_02_filename           String?         @db.VarChar(255)
+  projeto_02_blob               Bytes?
+  bioma                         String?         @db.VarChar(20)
+  ccir_blob                     Bytes?
+  ccir_filename                 String?         @db.VarChar(255)
+  matricula_blob                Bytes?
+  matricula_filename            String?         @db.VarChar(255)
+  itr_blob                      Bytes?
+  itr_filename                  String?         @db.VarChar(255)
+  ada_blob                      Bytes?
+  ada_filename                  String?         @db.VarChar(255)
+  car_blob                      Bytes?
+  car_filename                  String?         @db.VarChar(255)
+  contrato_blob                 Bytes?
+  contrato_filename             String?         @db.VarChar(255)
+  aditivo_01_blob               Bytes?
+  aditivo_01_filename           String?         @db.VarChar(255)
+  aditivo_02_blob               Bytes?
+  aditivo_02_filename           String?         @db.VarChar(255)
+  matricula02                   String?         @db.VarChar(10)
+  matricula02_blob              Bytes?
+  matricula02_filename          String?         @db.VarChar(255)
+  matricula03                   String?         @db.VarChar(10)
+  matricula03_blob              Bytes?
+  matricula03_filename          String?         @db.VarChar(255)
+  matricula04                   String?         @db.VarChar(10)
+  matricula04_blob              Bytes?
+  matricula04_filename          String?         @db.VarChar(255)
+  matricula05                   String?         @db.VarChar(10)
+  matricula05_blob              Bytes?
+  matricula05_filename          String?         @db.VarChar(255)
+  itr02                         String?         @db.VarChar(10)
+  itr02_blob                    Bytes?
+  itr02_filename                String?         @db.VarChar(255)
+  cnpj                          String?         @db.VarChar(65)
+  car_blob_02                   Bytes?
+  car_blob_03                   Bytes?
+  car_blob_04                   Bytes?
+  car_filename_02               String?         @db.VarChar(255)
+  car_filename_03               String?         @db.VarChar(255)
+  car_filename_04               String?         @db.VarChar(255)
+  car2                          String?         @db.VarChar(60)
+  car3                          String?         @db.VarChar(60)
+  car4                          String?         @db.VarChar(60)
+  inativo_integracao            Decimal?        @db.Decimal(38, 0)
+  chave                         String?         @db.VarChar(25)
+  codigo_fazenda_interno        String?         @db.VarChar(25)
+  id_gestao_uso_solo_pai        Decimal?        @db.Decimal(38, 0)
+  nro_car                       Decimal?        @db.Decimal(38, 0)
+  id_gestao_uso_solo_pai_agrup  Decimal?        @db.Decimal(34, 0)
+  codigos_imoveis_agrupados     String?         @db.VarChar(500)
+  documentos_agrupados          String?         @db.VarChar(500)
+  propriedades_agrupadas        String?         @db.VarChar(1000)
+  proprietarios_agrupados       String?         @db.VarChar(1000)
+  cidades_agrupadas             String?         @db.VarChar(1000)
+  ufs_agrupados                 String?         @db.VarChar(500)
+  georeferenciado               Decimal?        @db.Decimal(8, 0)
+  incra                         String?         @db.VarChar(50)
+  id_licenca_1                  Decimal?        @db.Decimal(8, 0)
+  id_licenca_2                  Decimal?        @db.Decimal(8, 0)
+  id_licenca_3                  Decimal?        @db.Decimal(8, 0)
+  id_licenca_4                  Decimal?        @db.Decimal(8, 0)
+  id_licenca_5                  Decimal?        @db.Decimal(8, 0)
+  ano                           Decimal?        @db.Decimal(4, 0)
+  total_producao_ton_temp       Decimal?        @db.Decimal(18, 2)
+  area_serv_adm                 Decimal?        @db.Decimal(18, 4)
+  area_consolidada              Decimal?        @db.Decimal(18, 4)
+  area_uso_restrito             Decimal?        @db.Decimal(18, 4)
+  unidade                       unidade         @relation(fields: [id_unidade], references: [id_unidade], onDelete: NoAction, onUpdate: NoAction)
+  renovabio_det                 renovabio_det[]
+}
+
+model grupo {
+  id_grupo   Decimal   @id @db.Decimal(8, 0)
+  descricao  String?   @db.VarChar(255)
+  habilitado Decimal?  @db.Decimal(38, 0)
+  id_usina   Decimal?  @db.Decimal(8, 0)
+  usina      usina?    @relation(fields: [id_usina], references: [id_usina], onDelete: NoAction, onUpdate: NoAction)
+  usuario    usuario[]
+}
+
+model renovabio {
+  id_renovabio                   Decimal                          @id @db.Decimal(38, 0)
+  ano                            Decimal                          @db.Decimal(4, 0)
+  eleg_car_mapa_blob             Bytes?
+  eleg_car_mapa_filename         String?                          @db.VarChar(255)
+  eleg_car_shape_blob            Bytes?
+  eleg_car_shape_filename        String?                          @db.VarChar(255)
+  eleg_his_mapa_blob             Bytes?
+  eleg_his_mapa_filename         String?                          @db.VarChar(255)
+  eleg_his_shape_blob            Bytes?
+  eleg_his_shape_filename        String?                          @db.VarChar(255)
+  eleg_zon_mapa_blob             Bytes?
+  eleg_zon_mapa_filename         String?                          @db.VarChar(255)
+  eleg_zon_shape_blob            Bytes?
+  eleg_zon_shape_filename        String?                          @db.VarChar(255)
+  planilha_blob                  Bytes?
+  planilha_filename              String?                          @db.VarChar(255)
+  planilha_blob_02               Bytes?
+  planilha_filename_02           String?                          @db.VarChar(255)
+  id_unidade                     Decimal                          @db.Decimal(4, 0)
+  eleg_car_tiff_blob             Bytes?
+  eleg_car_tiff_filename         String?                          @db.VarChar(255)
+  eleg_his_tiff_blob             Bytes?
+  eleg_his_tiff_filename         String?                          @db.VarChar(255)
+  eleg_zon_tiff_blob             Bytes?
+  eleg_zon_tiff_filename         String?                          @db.VarChar(255)
+  responsavel                    String?                          @db.VarChar(255)
+  fase_ea_dist_rodov             Decimal?                         @db.Decimal(18, 1)
+  fase_ea_dist_dutov             Decimal?                         @db.Decimal(18, 1)
+  fase_ea_dist_ferrov            Decimal?                         @db.Decimal(18, 1)
+  fase_eh_dist_rodov             Decimal?                         @db.Decimal(18, 1)
+  fase_eh_dist_dutov             Decimal?                         @db.Decimal(18, 1)
+  fase_eh_dist_ferrov            Decimal?                         @db.Decimal(18, 1)
+  anexo_01_blob                  Bytes?
+  anexo_01_filename              String?                          @db.VarChar(255)
+  anexo_02_blob                  Bytes?
+  anexo_02_filename              String?                          @db.VarChar(255)
+  anexo_03_blob                  Bytes?
+  anexo_03_filename              String?                          @db.VarChar(255)
+  anexo_04_blob                  Bytes?
+  anexo_04_filename              String?                          @db.VarChar(255)
+  anexo_05_blob                  Bytes?
+  anexo_05_filename              String?                          @db.VarChar(255)
+  anexo_06_blob                  Bytes?
+  anexo_06_filename              String?                          @db.VarChar(255)
+  anexo_07_blob                  Bytes?
+  anexo_07_filename              String?                          @db.VarChar(255)
+  anexo_08_blob                  Bytes?
+  anexo_08_filename              String?                          @db.VarChar(255)
+  anexo_09_blob                  Bytes?
+  anexo_09_filename              String?                          @db.VarChar(255)
+  anexo_10_blob                  Bytes?
+  anexo_10_filename              String?                          @db.VarChar(255)
+  anexo_11_blob                  Bytes?
+  anexo_11_filename              String?                          @db.VarChar(255)
+  anexo_12_blob                  Bytes?
+  anexo_12_filename              String?                          @db.VarChar(255)
+  anexo_13_blob                  Bytes?
+  anexo_13_filename              String?                          @db.VarChar(255)
+  anexo_14_blob                  Bytes?
+  anexo_14_filename              String?                          @db.VarChar(255)
+  anexo_15_blob                  Bytes?
+  anexo_15_filename              String?                          @db.VarChar(255)
+  anexo_16_blob                  Bytes?
+  anexo_16_filename              String?                          @db.VarChar(255)
+  anexo_17_blob                  Bytes?
+  anexo_17_filename              String?                          @db.VarChar(255)
+  anexo_18_blob                  Bytes?
+  anexo_18_filename              String?                          @db.VarChar(255)
+  anexo_19_blob                  Bytes?
+  anexo_19_filename              String?                          @db.VarChar(255)
+  anexo_20_blob                  Bytes?
+  anexo_20_filename              String?                          @db.VarChar(255)
+  anexo_21_blob                  Bytes?
+  anexo_21_filename              String?                          @db.VarChar(255)
+  anexo_22_blob                  Bytes?
+  anexo_22_filename              String?                          @db.VarChar(255)
+  anexo_23_blob                  Bytes?
+  anexo_23_filename              String?                          @db.VarChar(255)
+  anexo_24_blob                  Bytes?
+  anexo_24_filename              String?                          @db.VarChar(255)
+  anexo_25_blob                  Bytes?
+  anexo_25_filename              String?                          @db.VarChar(255)
+  anexo_26_blob                  Bytes?
+  anexo_26_filename              String?                          @db.VarChar(255)
+  anexo_27_blob                  Bytes?
+  anexo_27_filename              String?                          @db.VarChar(255)
+  anexo_28_blob                  Bytes?
+  anexo_28_filename              String?                          @db.VarChar(255)
+  anexo_29_blob                  Bytes?
+  anexo_29_filename              String?                          @db.VarChar(255)
+  anexo_30_blob                  Bytes?
+  anexo_30_filename              String?                          @db.VarChar(255)
+  anexo_31_blob                  Bytes?
+  anexo_31_filename              String?                          @db.VarChar(255)
+  anexo_32_blob                  Bytes?
+  anexo_32_filename              String?                          @db.VarChar(255)
+  anexo_33_blob                  Bytes?
+  anexo_33_filename              String?                          @db.VarChar(255)
+  anexo_34_blob                  Bytes?
+  anexo_34_filename              String?                          @db.VarChar(255)
+  anexo_35_blob                  Bytes?
+  anexo_35_filename              String?                          @db.VarChar(255)
+  anexo_36_blob                  Bytes?
+  anexo_36_filename              String?                          @db.VarChar(255)
+  anexo_37_blob                  Bytes?
+  anexo_37_filename              String?                          @db.VarChar(255)
+  anexo_38_blob                  Bytes?
+  anexo_38_filename              String?                          @db.VarChar(255)
+  anexo_39_blob                  Bytes?
+  anexo_39_filename              String?                          @db.VarChar(255)
+  anexo_40_blob                  Bytes?
+  anexo_40_filename              String?                          @db.VarChar(255)
+  anexo_41_blob                  Bytes?
+  anexo_41_filename              String?                          @db.VarChar(255)
+  anexo_42_blob                  Bytes?
+  anexo_42_filename              String?                          @db.VarChar(255)
+  anexo_43_blob                  Bytes?
+  anexo_43_filename              String?                          @db.VarChar(255)
+  anexo_44_blob                  Bytes?
+  anexo_44_filename              String?                          @db.VarChar(255)
+  anexo_45_blob                  Bytes?
+  anexo_45_filename              String?                          @db.VarChar(255)
+  anexo_46_blob                  Bytes?
+  anexo_46_filename              String?                          @db.VarChar(255)
+  anexo_47_blob                  Bytes?
+  anexo_47_filename              String?                          @db.VarChar(255)
+  anexo_48_blob                  Bytes?
+  anexo_48_filename              String?                          @db.VarChar(255)
+  anexo_49_blob                  Bytes?
+  anexo_49_filename              String?                          @db.VarChar(255)
+  anexo_50_blob                  Bytes?
+  anexo_50_filename              String?                          @db.VarChar(255)
+  anexo_51_blob                  Bytes?
+  anexo_51_filename              String?                          @db.VarChar(255)
+  ano_prim_compara               String?                          @db.VarChar(15)
+  ano_segu_compara               String?                          @db.VarChar(15)
+  vol_eleg_prim_compara          Decimal?                         @db.Decimal(5, 2)
+  vol_eleg_segu_compara          Decimal?                         @db.Decimal(5, 2)
+  vol_eleg_comparado             Decimal?                         @db.Decimal(5, 2)
+  eta_anidro_prim_comp           Decimal?                         @db.Decimal(5, 2)
+  eta_anidro_segu_comp           Decimal?                         @db.Decimal(5, 2)
+  eta_anidro_comparado           Decimal?                         @db.Decimal(5, 2)
+  eta_hidrat_prim_comp           Decimal?                         @db.Decimal(5, 2)
+  eta_hidrat_segu_comp           Decimal?                         @db.Decimal(5, 2)
+  eta_hidrat_comparado           Decimal?                         @db.Decimal(5, 2)
+  eta_hidrat_prim_simu           Decimal?                         @db.Decimal(11, 1)
+  eta_anidro_prim_simu           Decimal?                         @db.Decimal(11, 1)
+  eta_hidrat_segu_simu           Decimal?                         @db.Decimal(11, 1)
+  eta_anidro_segu_simu           Decimal?                         @db.Decimal(11, 1)
+  cbios_prim_simu                Decimal?                         @db.Decimal(10, 0)
+  cbios_segu_simu                Decimal?                         @db.Decimal(10, 0)
+  cbios_resultado_simu           Decimal?                         @db.Decimal(10, 0)
+  litros_prim_simu               Decimal?                         @db.Decimal(10, 0)
+  litros_segu_simu               Decimal?                         @db.Decimal(10, 0)
+  valor_prim_simu                Decimal?                         @db.Decimal(14, 2)
+  valor_segu_simu                Decimal?                         @db.Decimal(14, 2)
+  valor_resultado_simu           Decimal?                         @db.Decimal(14, 2)
+  valor_cbio_prim_simu           Decimal?                         @db.Decimal(5, 2)
+  valor_cbio_segu_simu           Decimal?                         @db.Decimal(5, 2)
+  valor_cambio_prim_simu         Decimal?                         @db.Decimal(5, 2)
+  valor_cambio_segu_simu         Decimal?                         @db.Decimal(5, 2)
+  planilha_blob_03               Bytes?
+  planilha_filename_03           String?                          @db.VarChar(255)
+  planilha_blob_04               Bytes?
+  planilha_filename_04           String?                          @db.VarChar(255)
+  planilha_blob_05               Bytes?
+  planilha_filename_05           String?                          @db.VarChar(255)
+  planilha_blob_06               Bytes?
+  planilha_filename_06           String?                          @db.VarChar(255)
+  planilha_memorial_blob         Bytes?
+  planilha_memorial_filename     String?                          @db.VarChar(255)
+  painel_valor_certificacao      Decimal?                         @db.Decimal(8, 2)
+  painel_valor_avaliacao         Decimal?                         @db.Decimal(8, 2)
+  eleg_car_mapa1_blob            Bytes?
+  eleg_car_mapa1_filename        String?                          @db.VarChar(255)
+  eleg_car_mapa2_blob            Bytes?
+  eleg_car_mapa2_filename        String?                          @db.VarChar(255)
+  eleg_his_mapa1_blob            Bytes?
+  eleg_his_mapa1_filename        String?                          @db.VarChar(255)
+  eleg_his_mapa2_blob            Bytes?
+  eleg_his_mapa2_filename        String?                          @db.VarChar(255)
+  eleg_car_shape1_blob           Bytes?
+  eleg_car_shape1_filename       String?                          @db.VarChar(255)
+  eleg_car_shape2_blob           Bytes?
+  eleg_car_shape2_filename       String?                          @db.VarChar(255)
+  eleg_his_shape1_blob           Bytes?
+  eleg_his_shape1_filename       String?                          @db.VarChar(255)
+  eleg_his_shape2_blob           Bytes?
+  eleg_his_shape2_filename       String?                          @db.VarChar(255)
+  unidade                        unidade                          @relation(fields: [id_unidade], references: [id_unidade], onDelete: NoAction, onUpdate: NoAction)
+  renovabio_det                  renovabio_det[]
+  renovabio_for_calculos         renovabio_for_calculos[]
+  renovabio_for_cbio_fornecedor  renovabio_for_cbio_fornecedor[]
+  renovabio_for_descontos        renovabio_for_descontos[]
+  renovabio_for_intens_carbono   renovabio_for_intens_carbono[]
+  renovabio_for_mix_producao     renovabio_for_mix_producao[]
+  renovabio_for_neea             renovabio_for_neea[]
+  renovabio_for_producao_energ   renovabio_for_producao_energ[]
+  renovabio_painel_avaliacao     renovabio_painel_avaliacao[]
+  renovabio_painel_certificacao  renovabio_painel_certificacao[]
+  renovabio_painel_status_report renovabio_painel_status_report[]
+  renovabio_producao             renovabio_producao[]
+  renovabio_resultado            renovabio_resultado[]
+}
+
+model renovabio_det {
+  id_renovabio_det              Decimal              @id @db.Decimal(38, 0)
+  id_renovabio                  Decimal              @db.Decimal(38, 0)
+  id_gestao_uso_solo            Decimal?             @db.Decimal(38, 0)
+  eleg_car                      Decimal?             @db.Decimal(4, 0)
+  eleg_car_mapa_blob            Bytes?
+  eleg_car_mapa_filename        String?              @db.VarChar(255)
+  eleg_his                      Decimal?             @db.Decimal(4, 0)
+  eleg_his_mapa_blob            Bytes?
+  eleg_his_mapa_filename        String?              @db.VarChar(255)
+  eleg_zon                      Decimal?             @db.Decimal(4, 0)
+  eleg_zon_mapa_blob            Bytes?
+  eleg_zon_mapa_filename        String?              @db.VarChar(255)
+  area_total_imovel             Decimal?             @db.Decimal(18, 3)
+  area_agricultavel             Decimal?             @db.Decimal(18, 3)
+  tipo_dado                     Decimal              @db.Decimal(4, 0)
+  ig_tipo_plantio               Decimal              @db.Decimal(4, 0)
+  ig_prod_total_moagem          Decimal?             @db.Decimal(18, 3)
+  ig_teor_impur_vegetal         Decimal?             @db.Decimal(18, 3)
+  ig_umid_impur_vegetal         Decimal?             @db.Decimal(18, 2)
+  ig_teor_impur_mineral         Decimal?             @db.Decimal(18, 3)
+  ig_palha_colhida              Decimal?             @db.Decimal(18, 2)
+  area_queimada                 Decimal?             @db.Decimal(18, 3)
+  co_calcario_calcitico         Decimal?             @db.Decimal(18, 3)
+  co_calcario_dolomitico        Decimal?             @db.Decimal(18, 3)
+  co_gesso                      Decimal?             @db.Decimal(18, 3)
+  fs_ureia                      Decimal?             @db.Decimal(18, 3)
+  fs_fosfato_monoamonico_nt     Decimal?             @db.Decimal(18, 3)
+  fs_fosfato_monoamonico_po     Decimal?             @db.Decimal(18, 3)
+  fs_fosfato_nt                 Decimal?             @db.Decimal(18, 3)
+  fs_fosfato_p2os               Decimal?             @db.Decimal(18, 3)
+  fs_fosfato_diamonico_nf       Decimal?             @db.Decimal(18, 3)
+  fs_fosfato_diamonico_p2os     Decimal?             @db.Decimal(18, 3)
+  fs_nitrato_amonio             Decimal?             @db.Decimal(18, 3)
+  fs_soluc_nitrato              Decimal?             @db.Decimal(18, 3)
+  fs_amonia_anidra              Decimal?             @db.Decimal(18, 3)
+  fs_sulfato_amonio             Decimal?             @db.Decimal(18, 3)
+  fs_nitrato_amonio_calcop      Decimal?             @db.Decimal(18, 3)
+  fs_superfosfato_simples       Decimal?             @db.Decimal(18, 3)
+  fs_superfosfato_triplo        Decimal?             @db.Decimal(18, 3)
+  fs_cloreto_potassio           Decimal?             @db.Decimal(18, 3)
+  fs_outros_nt                  Decimal?             @db.Decimal(18, 3)
+  fs_outros_nt_desp             String?              @db.VarChar(100)
+  fs_outros_p2os                Decimal?             @db.Decimal(18, 3)
+  fs_outros_p2os_esp            String?              @db.VarChar(100)
+  fs_outros_k2ot                Decimal?             @db.Decimal(18, 3)
+  fs_outros_k2ot_esp            String?              @db.VarChar(100)
+  fo_vinhaca                    Decimal?             @db.Decimal(18, 3)
+  fo_vinhaca_concentr_n         Decimal?             @db.Decimal(18, 3)
+  fo_torta                      Decimal?             @db.Decimal(18, 3)
+  fo_torta_concentr_n           Decimal?             @db.Decimal(18, 3)
+  fo_cinza                      Decimal?             @db.Decimal(18, 3)
+  fo_cinza_concentr_n           Decimal?             @db.Decimal(18, 3)
+  fo_outros_01                  Decimal?             @db.Decimal(18, 3)
+  fo_outros_01_concentr_n       Decimal?             @db.Decimal(18, 3)
+  fo_outros_01_esp              String?              @db.VarChar(100)
+  fo_outros_02                  Decimal?             @db.Decimal(18, 3)
+  fo_outros_02_concentr_n       Decimal?             @db.Decimal(18, 3)
+  fo_outros_02_esp              String?              @db.VarChar(100)
+  ce_diesel_b8                  Decimal?             @db.Decimal(18, 3)
+  ce_diesel_b10                 Decimal?             @db.Decimal(18, 3)
+  ce_diesel_bx                  Decimal?             @db.Decimal(18, 3)
+  ce_teor_biodiesel             Decimal?             @db.Decimal(18, 3)
+  ce_diesel_b20                 Decimal?             @db.Decimal(18, 3)
+  ce_diesel_b30                 Decimal?             @db.Decimal(18, 3)
+  ce_diesel_b100                Decimal?             @db.Decimal(18, 3)
+  ce_gasolina_c                 Decimal?             @db.Decimal(18, 3)
+  ce_etanol_hidratado           Decimal?             @db.Decimal(18, 3)
+  ce_biometano_terceiros        Decimal?             @db.Decimal(18, 3)
+  ce_biometano_proprio          Decimal?             @db.Decimal(18, 3)
+  ce_eletricidade_rede          Decimal?             @db.Decimal(18, 3)
+  ce_eletricidade_pch           Decimal?             @db.Decimal(18, 3)
+  ce_eletricidade_biomassa      Decimal?             @db.Decimal(18, 3)
+  ce_eletricidade_eolica        Decimal?             @db.Decimal(18, 3)
+  ce_eletricidade_solar         Decimal?             @db.Decimal(18, 3)
+  tem_supressao_veg_nativa_2018 Decimal?             @db.Decimal(4, 0)
+  status_car                    Decimal?             @db.Decimal(4, 0)
+  qtd_comp_produtor_biocomb     Decimal?             @db.Decimal(18, 3)
+  cod_agrupado                  Decimal?             @db.Decimal(38, 0)
+  nome_agrupado                 String?              @db.VarChar(200)
+  cnpj_agrupado                 String?              @db.VarChar(20)
+  id_renovabio_det_pai_agrup    Decimal?             @db.Decimal(34, 0)
+  id_cidade                     Decimal?             @db.Decimal(8, 0)
+  municipio                     String?              @db.VarChar(255)
+  uf                            String?              @db.VarChar(2)
+  proprietario                  String?              @db.VarChar(255)
+  area_agricultavel_agrup       Decimal?             @db.Decimal(18, 3)
+  car                           String?              @db.VarChar(60)
+  car_blob                      Bytes?
+  car_filename                  String?              @db.VarChar(255)
+  tipo_parceria                 String?              @db.VarChar(50)
+  inativo_integracao            Decimal?             @db.Decimal(4, 0)
+  chave                         String?              @db.VarChar(25)
+  codigo_fazenda_interno        String?              @db.VarChar(25)
+  nro_car                       Decimal?             @db.Decimal(4, 0)
+  codigos_imoveis_agrupados     String?              @db.VarChar(1000)
+  documentos_agrupados          String?              @db.VarChar(1000)
+  propriedades_agrupadas        String?              @db.VarChar(1000)
+  proprietarios_agrupados       String?              @db.VarChar(1000)
+  cidades_agrupadas             String?              @db.VarChar(1000)
+  ufs_agrupados                 String?              @db.VarChar(500)
+  ano                           Decimal?             @db.Decimal(4, 0)
+  motivo_inelegibilidade        String?              @db.VarChar(100)
+  gestao_uso_solo               gestao_uso_solo?     @relation(fields: [id_gestao_uso_solo], references: [id_gestao_uso_solo], onDelete: NoAction, onUpdate: NoAction)
+  renovabio_det                 renovabio_det?       @relation("renovabio_detTorenovabio_det", fields: [id_renovabio_det_pai_agrup], references: [id_renovabio_det], onDelete: NoAction, onUpdate: NoAction)
+  renovabio                     renovabio            @relation(fields: [id_renovabio], references: [id_renovabio], onDelete: NoAction, onUpdate: NoAction)
+  other_renovabio_det           renovabio_det[]      @relation("renovabio_detTorenovabio_det")
+  renovabio_det_blob            renovabio_det_blob[]
+}
+
+model renovabio_det_blob {
+  id_renovabio_det_blob          Decimal       @id @db.Decimal(4, 0)
+  id_renovabio_det               Decimal       @db.Decimal(4, 0)
+  ig_prod_total_moagem           Bytes?
+  ig_prod_total_moagem_file      String?       @db.VarChar(255)
+  ig_teor_impur_vegetal          Bytes?
+  ig_teor_impur_vegetal_file     String?       @db.VarChar(255)
+  ig_umid_impur_vegetal          Bytes?
+  ig_umid_impur_vegetal_file     String?       @db.VarChar(255)
+  ig_teor_impur_mineral          Bytes?
+  ig_teor_impur_mineral_file     String?       @db.VarChar(255)
+  ig_palha_colhida               Bytes?
+  ig_palha_colhida_file          String?       @db.VarChar(255)
+  area_queimada                  Bytes?
+  area_queimada_file             String?       @db.VarChar(255)
+  co_calcario_calcitico          Bytes?
+  co_calcario_calcitico_file     String?       @db.VarChar(255)
+  co_calcario_dolomitico         Bytes?
+  co_calcario_dolomitico_file    String?       @db.VarChar(255)
+  co_gesso                       Bytes?
+  co_gesso_file                  String?       @db.VarChar(255)
+  fs_ureia                       Bytes?
+  fs_ureia_file                  String?       @db.VarChar(255)
+  fs_fosfato_monoamon_nt         Bytes?
+  fs_fosfato_monoamon_nt_file    String?       @db.VarChar(255)
+  fs_fosfato_monoamon_po         Bytes?
+  fs_fosfato_monoamon_po_file    String?       @db.VarChar(255)
+  fs_fosfato_nt                  Bytes?
+  fs_fosfato_nt_file             String?       @db.VarChar(255)
+  fs_fosfato_p2os                Bytes?
+  fs_fosfato_p20s_file           String?       @db.VarChar(255)
+  fs_fosfato_diamonico_nf        Bytes?
+  fs_fosfato_diamonico_nf_file   String?       @db.VarChar(255)
+  fs_fosfato_diamonico_p2os      Bytes?
+  fs_fosfato_diamonico_p2os_file String?       @db.VarChar(255)
+  fs_nitrato_amonio              Bytes?
+  fs_nitrato_amonio_file         String?       @db.VarChar(255)
+  fs_soluc_nitrato               Bytes?
+  fs_soluc_nitrato_file          String?       @db.VarChar(255)
+  fs_amonia_anidra               Bytes?
+  fs_amonia_anidra_file          String?       @db.VarChar(255)
+  fs_sulfato_amonio              Bytes?
+  fs_sulfato_amonio_file         String?       @db.VarChar(255)
+  fs_nitrato_amonio_calcop       Bytes?
+  fs_nitrato_amonio_calcop_file  String?       @db.VarChar(255)
+  fs_superfosfato_simples        Bytes?
+  fs_superfosfato_simples_file   String?       @db.VarChar(255)
+  fs_superfosfato_triplo         Bytes?
+  fs_superfosfato_triplo_file    String?       @db.VarChar(255)
+  fs_cloreto_potassio            Bytes?
+  fs_cloreto_potassio_file       String?       @db.VarChar(255)
+  fs_outros_nt                   Bytes?
+  fs_outros_nt_file              String?       @db.VarChar(255)
+  fs_outros_p2os                 Bytes?
+  fs_outros_p2os_file            String?       @db.VarChar(255)
+  fs_outros_k2ot                 Bytes?
+  fs_outros_k2ot_file            String?       @db.VarChar(255)
+  fo_vinhaca                     Bytes?
+  fo_vinhaca_file                String?       @db.VarChar(255)
+  fo_vinhaca_concentr_n          Bytes?
+  fo_vinhaca_concentr_n_file     String?       @db.VarChar(255)
+  fo_torta                       Bytes?
+  fo_torta_file                  String?       @db.VarChar(255)
+  fo_torta_concentr_n            Bytes?
+  fo_torta_concentr_n_file       String?       @db.VarChar(255)
+  fo_cinza                       Bytes?
+  fo_cinza_file                  String?       @db.VarChar(255)
+  fo_cinza_concentr_n            Bytes?
+  fo_cinza_concentr_n_file       String?       @db.VarChar(255)
+  fo_outros_01                   Bytes?
+  fo_outros_01_file              String?       @db.VarChar(255)
+  fo_outros_01_concentr_n        Bytes?
+  fo_outros_01_concentr_n_file   String?       @db.VarChar(255)
+  fo_outros_02                   Bytes?
+  fo_outros_02_file              String?       @db.VarChar(255)
+  fo_outros_02_concentr_n        Bytes?
+  fo_outros_02_concentr_n_file   String?       @db.VarChar(255)
+  ce_diesel_b8                   Bytes?
+  ce_diesel_b8_file              String?       @db.VarChar(255)
+  ce_diesel_b10                  Bytes?
+  ce_diesel_b10_file             String?       @db.VarChar(255)
+  ce_diesel_bx                   Bytes?
+  ce_diesel_bx_file              String?       @db.VarChar(255)
+  ce_teor_biodiesel              Bytes?
+  ce_teor_biodiesel_file         String?       @db.VarChar(255)
+  ce_diesel_b20                  Bytes?
+  ce_diesel_b20_file             String?       @db.VarChar(255)
+  ce_diesel_b30                  Bytes?
+  ce_diesel_b30_file             String?       @db.VarChar(255)
+  ce_diesel_b100                 Bytes?
+  ce_diesel_b100_file            String?       @db.VarChar(255)
+  ce_gasolina_c                  Bytes?
+  ce_gasolina_c_file             String?       @db.VarChar(255)
+  ce_etanol_hidratado            Bytes?
+  ce_etanol_hidratado_file       String?       @db.VarChar(255)
+  ce_biometano_terceiros         Bytes?
+  ce_biometano_terceiros_file    String?       @db.VarChar(255)
+  ce_biometano_proprio           Bytes?
+  ce_biometano_proprio_file      String?       @db.VarChar(255)
+  ce_eletricidade_rede           Bytes?
+  ce_eletricidade_rede_file      String?       @db.VarChar(255)
+  ce_eletricidade_pch            Bytes?
+  ce_eletricidade_pch_file       String?       @db.VarChar(255)
+  ce_eletricidade_biomassa       Bytes?
+  ce_eletricidade_biomassa_file  String?       @db.VarChar(255)
+  ce_eletricidade_eolica         Bytes?
+  ce_eletricidade_eolica_file    String?       @db.VarChar(255)
+  ce_eletricidade_solar          Bytes?
+  ce_eletricidade_solar_file     String?       @db.VarChar(255)
+  anexo_linha_blob               Bytes?
+  anexo_linha_filename           String?       @db.VarChar(255)
+  renovabio_det                  renovabio_det @relation(fields: [id_renovabio_det], references: [id_renovabio_det], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model renovabio_evidencia {
+  id_renovabio_evidencia      Decimal                    @id @db.Decimal(8, 0)
+  id_renovabio_evidencia_tipo Decimal                    @db.Decimal(8, 0)
+  id_departamento             Decimal?                   @db.Decimal(8, 0)
+  id_usuario                  Decimal?                   @db.Decimal(8, 0)
+  indicador                   String?                    @db.VarChar(255)
+  entradas                    String?                    @db.VarChar(255)
+  verificador                 String?                    @db.VarChar(50)
+  descricao                   String?                    @db.VarChar(1000)
+  producao_total              String?                    @db.VarChar(20)
+  producao_certificada        String?                    @db.VarChar(255)
+  arquivo_blob                Bytes?
+  arquivo_2_blob              Bytes?
+  arquivo_3_blob              Bytes?
+  arquivo_4_blob              Bytes?
+  arquivo_5_blob              Bytes?
+  editavel                    Decimal?                   @db.Decimal(8, 0)
+  celula                      String?                    @db.VarChar(10)
+  status                      Decimal?                   @db.Decimal(8, 0)
+  respondido                  Decimal?                   @db.Decimal(8, 0)
+  id_unidade                  Decimal?                   @db.Decimal(8, 0)
+  arquivo_6_blob              Bytes?
+  arquivo_7_blob              Bytes?
+  arquivo_8_blob              Bytes?
+  arquivo_9_blob              Bytes?
+  arquivo_10_blob             Bytes?
+  arquivo_filename            String?                    @db.VarChar(255)
+  arquivo_2_filename          String?                    @db.VarChar(255)
+  arquivo_3_filename          String?                    @db.VarChar(255)
+  arquivo_4_filename          String?                    @db.VarChar(255)
+  arquivo_5_filename          String?                    @db.VarChar(255)
+  arquivo_6_filename          String?                    @db.VarChar(255)
+  arquivo_7_filename          String?                    @db.VarChar(255)
+  arquivo_8_filename          String?                    @db.VarChar(255)
+  arquivo_9_filename          String?                    @db.VarChar(255)
+  arquivo_10_filename         String?                    @db.VarChar(255)
+  ano                         Decimal                    @db.Decimal(8, 0)
+  tipo_planilha               Decimal                    @db.Decimal(4, 0)
+  renovabio_evidencia_tipo    renovabio_evidencia_tipo   @relation(fields: [id_renovabio_evidencia_tipo], references: [id_renovabio_evidencia_tipo], onDelete: NoAction, onUpdate: NoAction)
+  unidade                     unidade?                   @relation(fields: [id_unidade], references: [id_unidade], onDelete: NoAction, onUpdate: NoAction)
+  renovabio_evidencia_blob    renovabio_evidencia_blob[]
+}
+
+model renovabio_evidencia_blob {
+  id_renovabio_evidencia_blob Decimal             @id @db.Decimal(8, 0)
+  id_renovabio_evidencia      Decimal             @db.Decimal(8, 0)
+  ano                         Decimal             @db.Decimal(4, 0)
+  arquivo                     String              @db.VarChar(255)
+  arquivo_blob                Bytes
+  renovabio_evidencia         renovabio_evidencia @relation(fields: [id_renovabio_evidencia], references: [id_renovabio_evidencia], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model renovabio_evidencia_tipo {
+  id_renovabio_evidencia_tipo Decimal               @id @db.Decimal(8, 0)
+  descricao                   String                @db.VarChar(255)
+  ordem                       Decimal?              @db.Decimal(38, 0)
+  classificacao               Decimal?              @db.Decimal(38, 0)
+  unidade                     String?               @db.VarChar(40)
+  titulo                      Decimal?              @db.Decimal(38, 0)
+  sequencia                   String?               @db.VarChar(7)
+  tipo_planilha               Decimal               @db.Decimal(4, 0)
+  evidencias                  String?               @db.VarChar(1500)
+  renovabio_evidencia         renovabio_evidencia[]
+}
+
+model renovabio_for_calculos {
+  id                     Decimal   @id @db.Decimal(8, 0)
+  id_renovabio           Decimal   @db.Decimal(38, 0)
+  fornecedor             String?   @db.VarChar(255)
+  secao                  Decimal?  @db.Decimal(8, 0)
+  area_total             Decimal?  @db.Decimal(25, 15)
+  area_corte             Decimal?  @db.Decimal(25, 15)
+  producao_total         Decimal?  @db.Decimal(25, 15)
+  produtividade          Decimal?  @db.Decimal(25, 15)
+  kg_co2                 Decimal?  @db.Decimal(25, 15)
+  kg_co2_eq_t_cana       Decimal?  @db.Decimal(25, 15)
+  ic_agricola_anidro     Decimal?  @db.Decimal(25, 15)
+  ic_outros_anidro       Decimal?  @db.Decimal(25, 15)
+  ic_total_anidro        Decimal?  @db.Decimal(25, 15)
+  ic_agricola_hidrat     Decimal?  @db.Decimal(25, 15)
+  ic_outros_hidrat       Decimal?  @db.Decimal(25, 15)
+  ic_total_hidrat        Decimal?  @db.Decimal(25, 15)
+  vlr_neaa_anidro        Decimal?  @db.Decimal(25, 15)
+  vlr_neaa_hidratado     Decimal?  @db.Decimal(25, 15)
+  fator_emissao_anidro   Decimal?  @db.Decimal(25, 15)
+  vlr_fat_emiss_anidro   Decimal?  @db.Decimal(25, 15)
+  fator_emissao_hidrat   Decimal?  @db.Decimal(25, 15)
+  vlr_fat_emiss_hidrat   Decimal?  @db.Decimal(25, 15)
+  ton_cana_safra_ineleg  Decimal?  @db.Decimal(25, 15)
+  ton_cana_safra_eleg    Decimal?  @db.Decimal(25, 15)
+  vlr_atr_kg_tc          Decimal?  @db.Decimal(25, 15)
+  kg_total               Decimal?  @db.Decimal(25, 15)
+  kg_anidro              Decimal?  @db.Decimal(25, 15)
+  kg_hidratado           Decimal?  @db.Decimal(25, 15)
+  metro_cubico_anidro    Decimal?  @db.Decimal(25, 15)
+  metro_cubico_hidrat    Decimal?  @db.Decimal(25, 15)
+  cbios_anidro           Decimal?  @db.Decimal(25, 15)
+  cbios_hidrat           Decimal?  @db.Decimal(25, 15)
+  cbios_total            Decimal?  @db.Decimal(25, 15)
+  categ_participacao     Decimal?  @db.Decimal(4, 0)
+  vlr_cbios_fornecedor   Decimal?  @db.Decimal(25, 15)
+  color                  String?   @db.VarChar(255)
+  documento              String?   @db.VarChar(20)
+  codigos_fazendas       String?   @db.VarChar(500)
+  motivo_inelegibilidade String?   @db.VarChar(255)
+  renovabio              renovabio @relation(fields: [id_renovabio], references: [id_renovabio], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model renovabio_for_cbio_fornecedor {
+  id                    Decimal   @id @db.Decimal(8, 0)
+  id_renovabio          Decimal   @db.Decimal(38, 0)
+  descricao             String?   @db.VarChar(100)
+  percentual            Decimal?  @db.Decimal(25, 15)
+  valor                 Decimal?  @db.Decimal(25, 15)
+  posicao               Decimal?  @db.Decimal(4, 0)
+  editavel              Decimal?  @db.Decimal(4, 0)
+  formatacao_percentual String?   @db.VarChar(20)
+  formatacao_valor      String?   @db.VarChar(20)
+  color_percent         String?   @db.VarChar(255)
+  color_valor           String?   @db.VarChar(255)
+  renovabio             renovabio @relation(fields: [id_renovabio], references: [id_renovabio], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model renovabio_for_descontos {
+  id            Decimal   @id @db.Decimal(8, 0)
+  id_renovabio  Decimal   @db.Decimal(38, 0)
+  descricao     String?   @db.VarChar(100)
+  perc_desconto Decimal?  @db.Decimal(12, 4)
+  posicao       Decimal?  @db.Decimal(4, 0)
+  renovabio     renovabio @relation(fields: [id_renovabio], references: [id_renovabio], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model renovabio_for_intens_carbono {
+  id             Decimal   @id @db.Decimal(8, 0)
+  id_renovabio   Decimal   @db.Decimal(38, 0)
+  produto        String?   @db.VarChar(100)
+  vlr_anidro     Decimal?  @db.Decimal(25, 15)
+  vlr_industrial Decimal?  @db.Decimal(25, 15)
+  valor          Decimal?  @db.Decimal(25, 15)
+  posicao        Decimal?  @db.Decimal(4, 0)
+  editavel       Decimal?  @db.Decimal(4, 0)
+  formatacao     String?   @db.VarChar(20)
+  color          String?   @db.VarChar(255)
+  renovabio      renovabio @relation(fields: [id_renovabio], references: [id_renovabio], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model renovabio_for_mix_producao {
+  id            Decimal   @id @db.Decimal(8, 0)
+  id_renovabio  Decimal   @db.Decimal(38, 0)
+  descricao     String?   @db.VarChar(100)
+  vlr_anidro    Decimal?  @db.Decimal(25, 15)
+  vlr_hidratado Decimal?  @db.Decimal(25, 15)
+  posicao       Decimal?  @db.Decimal(4, 0)
+  formatacao    String?   @db.VarChar(20)
+  color         String?   @db.VarChar(255)
+  renovabio     renovabio @relation(fields: [id_renovabio], references: [id_renovabio], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model renovabio_for_neea {
+  id            Decimal   @id @db.Decimal(8, 0)
+  id_renovabio  Decimal   @db.Decimal(38, 0)
+  produto       String?   @db.VarChar(100)
+  vlr_anidro    Decimal?  @db.Decimal(25, 15)
+  vlr_hidratado Decimal?  @db.Decimal(25, 15)
+  valor         Decimal?  @db.Decimal(25, 15)
+  posicao       Decimal?  @db.Decimal(4, 0)
+  editavel      Decimal?  @db.Decimal(4, 0)
+  formatacao    String?   @db.VarChar(20)
+  color         String?   @db.VarChar(255)
+  renovabio     renovabio @relation(fields: [id_renovabio], references: [id_renovabio], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model renovabio_for_producao_energ {
+  id               Decimal   @id @db.Decimal(8, 0)
+  id_renovabio     Decimal   @db.Decimal(38, 0)
+  produto          String    @db.VarChar(100)
+  rendimento       Decimal?  @db.Decimal(25, 15)
+  massa_especifica Decimal?  @db.Decimal(25, 15)
+  pci              Decimal?  @db.Decimal(25, 15)
+  fator_energetico Decimal?  @db.Decimal(25, 15)
+  posicao          Decimal?  @db.Decimal(4, 0)
+  formatacao       String?   @db.VarChar(20)
+  color            String?   @db.VarChar(255)
+  unidade_medida   String?   @db.VarChar(100)
+  renovabio        renovabio @relation(fields: [id_renovabio], references: [id_renovabio], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model renovabio_painel_avaliacao {
+  id_renovabio_avaliacao Decimal                @id @db.Decimal(38, 0)
+  id_renovabio           Decimal                @db.Decimal(38, 0)
+  id_renovabio_usina     Decimal                @db.Decimal(38, 0)
+  area_elegivel          Decimal?               @db.Decimal(18, 2)
+  nota_hidratado         Decimal?               @db.Decimal(18, 2)
+  nota_anidro            Decimal?               @db.Decimal(18, 2)
+  fator_hidratado        Decimal?               @db.Decimal(18, 9)
+  fator_anidro           Decimal?               @db.Decimal(18, 9)
+  volume_hidratado       Decimal?               @db.Decimal(18, 4)
+  volume_anidro          Decimal?               @db.Decimal(18, 4)
+  cbios_hidratado        Decimal?               @db.Decimal(18, 4)
+  cbios_anidro           Decimal?               @db.Decimal(18, 4)
+  cbios_total            Decimal?               @db.Decimal(18, 4)
+  total                  Decimal?               @db.Decimal(18, 2)
+  ano_base_importacao    Decimal?               @db.Decimal(4, 0)
+  renovabio              renovabio              @relation(fields: [id_renovabio], references: [id_renovabio], onDelete: NoAction, onUpdate: NoAction)
+  renovabio_painel_usina renovabio_painel_usina @relation(fields: [id_renovabio_usina], references: [id_renovabio_usina], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model renovabio_painel_benc {
+  id                            Decimal                    @id @db.Decimal(8, 0)
+  id_renovabio_painel_benc_tipo Decimal                    @db.Decimal(8, 0)
+  id_renovabio_usina            Decimal                    @db.Decimal(8, 0)
+  ativo                         Decimal                    @db.Decimal(4, 0)
+  valor                         Decimal?                   @db.Decimal(18, 4)
+  renovabio_painel_benc_tipo    renovabio_painel_benc_tipo @relation(fields: [id_renovabio_painel_benc_tipo], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  renovabio_painel_usina        renovabio_painel_usina     @relation(fields: [id_renovabio_usina], references: [id_renovabio_usina], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model renovabio_painel_benc_tipo {
+  id                    Decimal                 @id @db.Decimal(8, 0)
+  cor                   String                  @db.VarChar(30)
+  fase                  Decimal                 @db.Decimal(4, 0)
+  nivel                 Decimal                 @db.Decimal(4, 0)
+  ordem                 Decimal                 @db.Decimal(4, 0)
+  ativo                 Decimal                 @db.Decimal(4, 0)
+  descricao             String                  @db.VarChar(255)
+  unidade_medida        String?                 @db.VarChar(30)
+  nivel_descricao       String                  @db.VarChar(255)
+  renovabio_painel_benc renovabio_painel_benc[]
+}
+
+model renovabio_painel_benchmarking {
+  id_renovabio_painel_bench     Decimal                @id @db.Decimal(8, 0)
+  id_renovabio_usina            Decimal                @db.Decimal(8, 0)
+  ano                           Decimal                @db.Decimal(4, 0)
+  ig_area_total                 Decimal?               @db.Decimal(18, 4)
+  ig_prod_total_moagem          Decimal?               @db.Decimal(18, 3)
+  ig_qtd_comp_produtor_biocomb  Decimal?               @db.Decimal(18, 3)
+  ig_teor_impur_vegetal         Decimal?               @db.Decimal(18, 3)
+  ig_umidade_impur_vegetal      Decimal?               @db.Decimal(18, 4)
+  ig_teor_impur_mineral         Decimal?               @db.Decimal(18, 3)
+  ig_palha_recolhida            Decimal?               @db.Decimal(18, 3)
+  area_queimada                 Decimal?               @db.Decimal(18, 3)
+  co_calcario_calcitico         Decimal?               @db.Decimal(18, 3)
+  co_calcario_dolomitico        Decimal?               @db.Decimal(18, 3)
+  co_gesso                      Decimal?               @db.Decimal(18, 3)
+  fs_ureia                      Decimal?               @db.Decimal(18, 3)
+  fs_fosfato_monoamonico_nt     Decimal?               @db.Decimal(18, 3)
+  fs_fosfato_monoamonico_p2os   Decimal?               @db.Decimal(18, 3)
+  fs_fosfato_diamonico_nt       Decimal?               @db.Decimal(18, 3)
+  fs_fosfato_diamonico_p2os     Decimal?               @db.Decimal(18, 3)
+  fs_nitrato_amonio             Decimal?               @db.Decimal(18, 3)
+  fs_soluc_nitr_amon_ureia      Decimal?               @db.Decimal(18, 3)
+  fs_amonia_anidra              Decimal?               @db.Decimal(18, 3)
+  fs_sulft_amonio               Decimal?               @db.Decimal(18, 3)
+  fs_nitr_amonio_calc           Decimal?               @db.Decimal(18, 3)
+  fs_super_fosfat_simples       Decimal?               @db.Decimal(18, 3)
+  fs_super_fostat_trip          Decimal?               @db.Decimal(18, 3)
+  fs_cloreto_potassio_kci       Decimal?               @db.Decimal(18, 3)
+  fs_outros_nt                  Decimal?               @db.Decimal(18, 3)
+  fs_outros_p2os                Decimal?               @db.Decimal(18, 3)
+  fs_outros_k2ot                Decimal?               @db.Decimal(18, 3)
+  fo_vinhaca                    Decimal?               @db.Decimal(18, 3)
+  fo_vinhaca_concentr_n         Decimal?               @db.Decimal(18, 3)
+  fo_torta_filtr_base_umid      Decimal?               @db.Decimal(18, 3)
+  fo_torta_concentr_n           Decimal?               @db.Decimal(18, 3)
+  fo_cinza_fulig_base_umid      Decimal?               @db.Decimal(18, 3)
+  fo_cnz_fulig_concentr_n       Decimal?               @db.Decimal(18, 3)
+  fo_outros_1_kg                Decimal?               @db.Decimal(18, 3)
+  fo_outros_1_concentr_n        Decimal?               @db.Decimal(18, 3)
+  fo_outros_2_kg                Decimal?               @db.Decimal(18, 3)
+  fo_outros_2_concentr_n        Decimal?               @db.Decimal(18, 3)
+  ce_diesel_b10                 Decimal?               @db.Decimal(18, 3)
+  ce_diesel_b11                 Decimal?               @db.Decimal(18, 3)
+  ce_diesel_b15                 Decimal?               @db.Decimal(18, 3)
+  ce_diesel_bx                  Decimal?               @db.Decimal(18, 3)
+  ce_teor_biodiesel_mistura     Decimal?               @db.Decimal(18, 4)
+  ce_diesel_b20                 Decimal?               @db.Decimal(18, 3)
+  ce_diesel_b30                 Decimal?               @db.Decimal(18, 3)
+  ce_diesel_b100                Decimal?               @db.Decimal(18, 3)
+  ce_gasolina_c                 Decimal?               @db.Decimal(18, 3)
+  ce_etanol_hidratado           Decimal?               @db.Decimal(18, 3)
+  ce_biometano_terceiros        Decimal?               @db.Decimal(18, 3)
+  ce_biometano_proprio          Decimal?               @db.Decimal(18, 3)
+  ce_eletricidade_rede          Decimal?               @db.Decimal(18, 3)
+  ce_eletricidade_pch           Decimal?               @db.Decimal(18, 3)
+  ce_eletricidade_biomassa      Decimal?               @db.Decimal(18, 3)
+  ce_eletricidade_eolica        Decimal?               @db.Decimal(18, 3)
+  ce_eletricidade_solar         Decimal?               @db.Decimal(18, 3)
+  pr_qtd_cana_processada        Decimal?               @db.Decimal(18, 3)
+  pr_qtd_palha_processada       Decimal?               @db.Decimal(18, 3)
+  pr_rend_etanol_anidro         Decimal?               @db.Decimal(18, 3)
+  pr_rend_etanol_hidratado      Decimal?               @db.Decimal(18, 3)
+  pr_rend_acucar                Decimal?               @db.Decimal(18, 3)
+  pr_rend_energ_eletr_comerc    Decimal?               @db.Decimal(18, 3)
+  pr_rend_bag_comerc_base_umida Decimal?               @db.Decimal(18, 3)
+  pr_umidade                    Decimal?               @db.Decimal(18, 4)
+  bag_propr_qtd_base_umida      Decimal?               @db.Decimal(18, 3)
+  bag_propr_umidade             Decimal?               @db.Decimal(18, 4)
+  palha_propr_qtd_base_umida    Decimal?               @db.Decimal(18, 3)
+  palha_propr_umidade           Decimal?               @db.Decimal(18, 4)
+  bag_terc_qtd_base_umida       Decimal?               @db.Decimal(18, 3)
+  bag_terc_umidade              Decimal?               @db.Decimal(18, 4)
+  bag_terc_dist_transp          Decimal?               @db.Decimal(18, 3)
+  palha_terc_qtd_base_umida     Decimal?               @db.Decimal(18, 3)
+  palha_terc_umidade            Decimal?               @db.Decimal(18, 4)
+  palha_terc_dist_transp        Decimal?               @db.Decimal(18, 3)
+  cavac_madei_qtd_base_umida    Decimal?               @db.Decimal(18, 3)
+  cavac_madei_umidade           Decimal?               @db.Decimal(18, 4)
+  cavac_madei_dist_transp       Decimal?               @db.Decimal(18, 3)
+  lenha_qtd_base_umida          Decimal?               @db.Decimal(18, 3)
+  lenha_umidade                 Decimal?               @db.Decimal(18, 4)
+  lenha_dist_transp             Decimal?               @db.Decimal(18, 3)
+  res_florest_qtd_base_umida    Decimal?               @db.Decimal(18, 3)
+  res_florest_umidade           Decimal?               @db.Decimal(18, 4)
+  res_florest_dist_transp       Decimal?               @db.Decimal(18, 3)
+  ec_oleo_combustivel           Decimal?               @db.Decimal(18, 3)
+  ec_etanol_hidratado_proprio   Decimal?               @db.Decimal(18, 3)
+  ec_etanol_anidro_proprio      Decimal?               @db.Decimal(18, 3)
+  ec_biogas_proprio             Decimal?               @db.Decimal(18, 3)
+  ec_pci_biogas_proprio         Decimal?               @db.Decimal(18, 3)
+  ec_biogas_terceiros           Decimal?               @db.Decimal(18, 3)
+  ec_pci_biogas_terceiros       Decimal?               @db.Decimal(18, 3)
+  ec_eletr_rede_mix_medio       Decimal?               @db.Decimal(18, 3)
+  ec_eletricidade_pch           Decimal?               @db.Decimal(18, 3)
+  ec_eletricidade_biomassa      Decimal?               @db.Decimal(18, 3)
+  ec_eletricidade_eolica        Decimal?               @db.Decimal(18, 3)
+  ec_eletricidade_solar         Decimal?               @db.Decimal(18, 3)
+  db_diesel_b10                 Decimal?               @db.Decimal(18, 3)
+  db_diesel_b11                 Decimal?               @db.Decimal(18, 3)
+  db_diesel_b15                 Decimal?               @db.Decimal(18, 3)
+  db_diesel_bx                  Decimal?               @db.Decimal(18, 3)
+  db_teor_biodiesel_mistura     Decimal?               @db.Decimal(18, 4)
+  db_diesel_b20                 Decimal?               @db.Decimal(18, 3)
+  db_diesel_b30                 Decimal?               @db.Decimal(18, 3)
+  db_diesel_b100                Decimal?               @db.Decimal(18, 3)
+  fase_dist_rodovia_anidro      Decimal?               @db.Decimal(18, 9)
+  fase_dist_dutovia_anidro      Decimal?               @db.Decimal(18, 9)
+  fase_dist_ferrovia_anidro     Decimal?               @db.Decimal(18, 9)
+  fase_dist_rodovia_hidratado   Decimal?               @db.Decimal(18, 9)
+  fase_dist_dutovia_hidratado   Decimal?               @db.Decimal(18, 9)
+  fase_dist_ferrovia_hidratado  Decimal?               @db.Decimal(18, 9)
+  ce_diesel_b8                  Decimal?               @db.Decimal(18, 9)
+  db_diesel_b8                  Decimal?               @db.Decimal(18, 9)
+  renovabio_painel_usina        renovabio_painel_usina @relation(fields: [id_renovabio_usina], references: [id_renovabio_usina], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model renovabio_painel_certificacao {
+  id_renovabio_certificacao Decimal                @id @db.Decimal(38, 0)
+  id_renovabio              Decimal                @db.Decimal(38, 0)
+  id_renovabio_usina        Decimal                @db.Decimal(38, 0)
+  area_elegivel             Decimal?               @db.Decimal(18, 2)
+  nota_hidratado            Decimal?               @db.Decimal(18, 2)
+  nota_anidro               Decimal?               @db.Decimal(18, 2)
+  fator_hidratado           Decimal?               @db.Decimal(18, 9)
+  fator_anidro              Decimal?               @db.Decimal(18, 9)
+  volume_hidratado          Decimal?               @db.Decimal(18, 4)
+  volume_anidro             Decimal?               @db.Decimal(18, 4)
+  cbios_hidratado           Decimal?               @db.Decimal(18, 4)
+  cbios_anidro              Decimal?               @db.Decimal(18, 4)
+  cbios_total               Decimal?               @db.Decimal(18, 4)
+  total                     Decimal?               @db.Decimal(18, 2)
+  ano_base_importacao       Decimal?               @db.Decimal(4, 0)
+  renovabio                 renovabio              @relation(fields: [id_renovabio], references: [id_renovabio], onDelete: NoAction, onUpdate: NoAction)
+  renovabio_painel_usina    renovabio_painel_usina @relation(fields: [id_renovabio_usina], references: [id_renovabio_usina], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model renovabio_painel_status_report {
+  id_renovabio_status_report Decimal                @id @db.Decimal(38, 0)
+  id_renovabio               Decimal                @db.Decimal(38, 0)
+  id_renovabio_usina         Decimal                @db.Decimal(38, 0)
+  et01                       Decimal?               @db.Decimal(8, 2)
+  et02                       Decimal?               @db.Decimal(8, 2)
+  et03                       Decimal?               @db.Decimal(8, 2)
+  et04                       Decimal?               @db.Decimal(8, 2)
+  status_geral               Decimal?               @db.Decimal(8, 2)
+  ano_base_importacao        Decimal?               @db.Decimal(4, 0)
+  renovabio                  renovabio              @relation(fields: [id_renovabio], references: [id_renovabio], onDelete: NoAction, onUpdate: NoAction)
+  renovabio_painel_usina     renovabio_painel_usina @relation(fields: [id_renovabio_usina], references: [id_renovabio_usina], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model renovabio_painel_usina {
+  id_renovabio_usina             Decimal                          @id @db.Decimal(38, 0)
+  id_usina                       Decimal                          @db.Decimal(4, 0)
+  descricao                      String                           @db.VarChar(100)
+  logo                           Bytes?
+  ordem                          Decimal                          @db.Decimal(4, 0)
+  usina                          usina                            @relation(fields: [id_usina], references: [id_usina], onDelete: NoAction, onUpdate: NoAction)
+  renovabio_painel_avaliacao     renovabio_painel_avaliacao[]
+  renovabio_painel_benc          renovabio_painel_benc[]
+  renovabio_painel_benchmarking  renovabio_painel_benchmarking[]
+  renovabio_painel_certificacao  renovabio_painel_certificacao[]
+  renovabio_painel_status_report renovabio_painel_status_report[]
+}
+
+model renovabio_producao {
+  id_renovabio_producao Decimal   @id @db.Decimal(38, 0)
+  id_renovabio          Decimal   @db.Decimal(38, 0)
+  mes                   Decimal   @db.Decimal(4, 0)
+  producao              Decimal?  @db.Decimal(18, 4)
+  expedicao             Decimal?  @db.Decimal(18, 4)
+  estoque               Decimal?  @db.Decimal(18, 4)
+  anexo_01_blob         Bytes?
+  anexo_01_filename     String?   @db.VarChar(255)
+  anexo_02_blob         Bytes?
+  anexo_02_filename     String?   @db.VarChar(255)
+  anexo_03_blob         Bytes?
+  anexo_03_filename     String?   @db.VarChar(255)
+  anexo_04_blob         Bytes?
+  anexo_04_filename     String?   @db.VarChar(255)
+  tipo                  Decimal   @db.Decimal(4, 0)
+  renovabio             renovabio @relation(fields: [id_renovabio], references: [id_renovabio], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model renovabio_resultado {
+  id_renovabio_resultado Decimal   @id @db.Decimal(38, 0)
+  id_renovabio           Decimal   @db.Decimal(38, 0)
+  numero                 String    @db.VarChar(20)
+  descricao              String    @db.VarChar(255)
+  anexo_01_blob          Bytes?
+  anexo_01_filename      String?   @db.VarChar(255)
+  anexo_02_blob          Bytes?
+  anexo_02_filename      String?   @db.VarChar(255)
+  anexo_03_blob          Bytes?
+  anexo_03_filename      String?   @db.VarChar(255)
+  anexo_04_blob          Bytes?
+  anexo_04_filename      String?   @db.VarChar(255)
+  renovabio              renovabio @relation(fields: [id_renovabio], references: [id_renovabio], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model unidade {
+  id_unidade               Decimal               @id @db.Decimal(8, 0)
+  razao                    String                @db.VarChar(255)
+  fantasia                 String                @db.VarChar(255)
+  documento                String                @db.VarChar(20)
+  ativo                    Decimal               @db.Decimal(38, 0)
+  logo                     Bytes?
+  id_usina                 Decimal?              @db.Decimal(8, 0)
+  ordem                    Decimal               @db.Decimal(8, 0)
+  meta                     Decimal?              @db.Decimal(18, 4)
+  usa_cati                 Decimal?              @db.Decimal(4, 0)
+  uf_cadri                 String?               @db.VarChar(2)
+  integrado_app            Decimal               @db.Decimal(4, 0)
+  municipio                String?               @db.VarChar(50)
+  url_painel_analitcs      String?               @db.VarChar(255)
+  url_painel_analitcs_corp String?               @db.VarChar(255)
+  usina                    usina?                @relation(fields: [id_usina], references: [id_usina], onDelete: NoAction, onUpdate: NoAction)
+  gestao_uso_solo          gestao_uso_solo[]
+  renovabio                renovabio[]
+  renovabio_evidencia      renovabio_evidencia[]
+}
+
+model usina {
+  id_usina                 Decimal                  @id @db.Decimal(8, 0)
+  razao                    String                   @db.VarChar(255)
+  documento                String                   @db.VarChar(20)
+  logo                     Bytes?
+  modelo_imp_renovabio_for Bytes?
+  grupo                    grupo[]
+  renovabio_painel_usina   renovabio_painel_usina[]
+  unidade                  unidade[]
+  usuario                  usuario[]
+}
+
+model usuario {
+  id_usuario          Decimal      @id @db.Decimal(38, 0)
+  nome                String       @db.VarChar(255)
+  email               String?      @db.VarChar(255)
+  ativo               Decimal      @db.Decimal(38, 0)
+  senha               String       @db.VarChar(32)
+  login               String       @db.VarChar(20)
+  id_usina            Decimal?     @db.Decimal(38, 0)
+  id_grupo            Decimal      @db.Decimal(38, 0)
+  id_departamento     Decimal      @db.Decimal(4, 0)
+  email_tmp           String?      @db.VarChar(255)
+  alterar_senha_login Decimal?     @db.Decimal(4, 0)
+  expiracao           DateTime?    @db.Timestamp(6)
+  integrado_app       Decimal      @db.Decimal(4, 0)
+  departamento        departamento @relation(fields: [id_departamento], references: [id_departamento], onDelete: NoAction, onUpdate: NoAction)
+  grupo               grupo        @relation(fields: [id_grupo], references: [id_grupo], onDelete: NoAction, onUpdate: NoAction)
+  usina               usina?       @relation(fields: [id_usina], references: [id_usina], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model usuario_externo {
+  id_usuario_externo Decimal   @id @db.Decimal(8, 0)
+  nome               String    @db.VarChar(255)
+  email              String    @db.VarChar(255)
+  ativo              Decimal   @db.Decimal(8, 0)
+  senha              String    @db.VarChar(32)
+  login              String    @db.VarChar(20)
+  data_limite        DateTime? @db.Timestamp(6)
 }

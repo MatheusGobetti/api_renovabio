@@ -1,25 +1,24 @@
-import { acesso } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
 import { Decimal } from '@prisma/client/runtime';
 
-export class RenovabioEntity implements acesso {
+export class CreateAcessoDto {
   @ApiProperty()
   id_acesso: Decimal;
 
   @ApiProperty()
   id_usuario: Decimal;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   usuario: string;
 
-  @ApiProperty({ required: false, nullable: true })
+  @ApiProperty()
   login: string;
 
   @ApiProperty()
   data_login: Date;
 
   @ApiProperty()
-  data_logout: Date;
+  data_logout?: Date;
 
   @ApiProperty()
   sessao: string;
@@ -27,6 +26,6 @@ export class RenovabioEntity implements acesso {
   @ApiProperty()
   numero_ip: string;
 
-  @ApiProperty()
-  detalhe: string;
+  @ApiProperty({ required: false })
+  detalhe?: string;
 }
