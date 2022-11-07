@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { UpdateRenovabioDto } from './dto/update-renovabio.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateAcessoDto } from './dto/create-acesso.dto';
+import { CreateAcessoDto } from './dto/acessoDto/create-acesso.dto';
+import { UpdateAcessoDto } from './dto/acessoDto/update-acesso.dto';
 
 @Injectable()
-export class RenovabioService {
+export class AcessoService {
   constructor(private prisma: PrismaService) {}
 
   create(createAcessoDto: CreateAcessoDto) {
@@ -23,10 +23,10 @@ export class RenovabioService {
     return this.prisma.acesso.findUnique({ where: { id_acesso } });
   }
 
-  update(id_acesso: number, updateRenovabioDto: UpdateRenovabioDto) {
+  update(id_acesso: number, updateAcessoDto: UpdateAcessoDto) {
     return this.prisma.acesso.update({
       where: { id_acesso },
-      data: updateRenovabioDto,
+      data: updateAcessoDto,
     });
   }
 

@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
-import { RenovabioService } from './renovabio.service';
-import { RenovabioController } from './renovabio.controller';
+import { RenovabioService } from './renovabio-renovabio.service';
+import { AcessoService } from './renovabio-acesso.service';
+import { AcessoController } from './renovabio-acesso.controller';
 import { PrismaModule } from 'src/prisma/prisma.module';
+import { RenovabioController } from './renovabio-renovabio.controller';
 
 @Module({
-  controllers: [RenovabioController],
-  providers: [RenovabioService],
+  controllers: [AcessoController, RenovabioController],
+  providers: [AcessoService, RenovabioService],
   imports: [PrismaModule],
 })
 export class RenovabioModule {}

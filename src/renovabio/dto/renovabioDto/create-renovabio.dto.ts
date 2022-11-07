@@ -1,8 +1,7 @@
-import { renovabio } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
 import { Decimal } from '@prisma/client/runtime';
 
-export class RenovabioEntity implements renovabio {
+export class CreateRenovabioDto {
   @ApiProperty()
   id_renovabio: Decimal;
 

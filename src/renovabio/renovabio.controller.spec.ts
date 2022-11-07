@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { RenovabioController } from './renovabio.controller';
-import { RenovabioService } from './renovabio.service';
+import { RenovabioController } from './renovabio-acesso.controller';
+import { RenovabioService } from './renovabio-acesso.service';
 
 describe('RenovabioController', () => {
   let controller: RenovabioController;
